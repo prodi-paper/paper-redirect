@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Prodiconseil — nouvelle adresse prodi.com</title>
+<link rel="canonical" href="https://prodi.com/cameroun/">
+<script>
+// Redirection permanente paper.prodi.com → prodi.com (même chemin, query + hash conservés).
+// Anti-boucle (anciens caches 301 « prodi → paper » d'avant le 31/08/2026) :
+// 1er passage = redirection, 2e = paramètre anti-cache pcb, 3e = arrêt + lien.
+(function(){
+  var n = 0;
+  try {
+    var rec = JSON.parse(sessionStorage.getItem('ppb') || '{"n":0,"t":0}');
+    if (Date.now() - rec.t < 15000) n = rec.n;
+    sessionStorage.setItem('ppb', JSON.stringify({n: n + 1, t: Date.now()}));
+  } catch (e) {}
+  var dest = 'https://prodi.com' + location.pathname + location.search + location.hash;
+  if (n === 0) { location.replace(dest); return; }
+  if (n === 1) {
+    var sep = location.search ? '&' : '?';
+    location.replace('https://prodi.com' + location.pathname + location.search + sep + 'pcb=' + Date.now() + location.hash);
+    return;
+  }
+  document.addEventListener('DOMContentLoaded', function(){
+    var el = document.getElementById('loop-msg');
+    if (el) el.style.display = 'block';
+  });
+})();
+</script>
+<noscript><meta http-equiv="refresh" content="0; url=https://prodi.com/cameroun/"></noscript>
+<style>
+body{font-family:-apple-system,'DM Sans',sans-serif;text-align:center;padding:60px 20px;color:#222}
+a{color:#FE0000;font-weight:700}
+#loop-msg{display:none;margin-top:14px;font-size:14px;color:#666;max-width:480px;margin-left:auto;margin-right:auto}
+</style>
+</head>
+<body>
+<p>Cette page a déménagé : <a href="https://prodi.com/cameroun/">https://prodi.com/cameroun/</a></p>
+<p id="loop-msg">Votre navigateur garde en mémoire une ancienne redirection.
+Videz le cache ou ouvrez une fenêtre privée, puis retournez sur
+<a href="https://prodi.com/cameroun/">https://prodi.com/cameroun/</a>.</p>
+</body>
+</html>

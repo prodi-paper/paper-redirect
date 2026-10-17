@@ -3,15 +3,11 @@
 <head>
 <meta charset="utf-8">
 <title>Prodiconseil — nouvelle adresse prodi.com</title>
-<meta name="robots" content="noindex">
 <link rel="canonical" href="https://prodi.com/">
 <script>
-// Redirection paper.prodi.com → prodi.com (chemin + query conservés).
-// Anti-boucle : d'anciens caches (301 OVH « prodi → paper » d'avant la
-// migration du 31/08/2026, TTL DNS 24 h) peuvent renvoyer ici en boucle.
-// 1er passage : redirection propre. 2e : on ajoute un paramètre anti-cache
-// (la 301 mémorisée par le navigateur est par URL exacte → contournée).
-// 3e : on ARRÊTE et on affiche un lien.
+// Redirection permanente paper.prodi.com → prodi.com (même chemin, query + hash conservés).
+// Anti-boucle (anciens caches 301 « prodi → paper » d'avant le 31/08/2026) :
+// 1er passage = redirection, 2e = paramètre anti-cache pcb, 3e = arrêt + lien.
 (function(){
   var n = 0;
   try {
@@ -26,13 +22,13 @@
     location.replace('https://prodi.com' + location.pathname + location.search + sep + 'pcb=' + Date.now() + location.hash);
     return;
   }
-  // n >= 2 : boucle détectée, on laisse la page statique visible.
   document.addEventListener('DOMContentLoaded', function(){
     var el = document.getElementById('loop-msg');
     if (el) el.style.display = 'block';
   });
 })();
 </script>
+<noscript><meta http-equiv="refresh" content="0; url=https://prodi.com/"></noscript>
 <style>
 body{font-family:-apple-system,'DM Sans',sans-serif;text-align:center;padding:60px 20px;color:#222}
 a{color:#FE0000;font-weight:700}
@@ -40,9 +36,9 @@ a{color:#FE0000;font-weight:700}
 </style>
 </head>
 <body>
-<p>Le site a déménagé : <a href="https://prodi.com/">prodi.com</a></p>
+<p>Cette page a déménagé : <a href="https://prodi.com/">https://prodi.com/</a></p>
 <p id="loop-msg">Votre navigateur garde en mémoire une ancienne redirection.
 Videz le cache ou ouvrez une fenêtre privée, puis retournez sur
-<a href="https://prodi.com/">prodi.com</a>.</p>
+<a href="https://prodi.com/">https://prodi.com/</a>.</p>
 </body>
 </html>
